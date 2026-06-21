@@ -39,7 +39,7 @@ services:
     depends_on:
       - db
   frontend_service:
-    image:shobha722/pyapp:frontend-image
+    image: shobha722/pyapp:frontend-image
     ports:
       - "5000:5000"
     deploy:
