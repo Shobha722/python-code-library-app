@@ -1,55 +1,60 @@
 ---
 services:
   db:
-    image: shobha722/pyapp:db-image
+    image: shaikmustafa/pyapp:db_image
+    deploy:
+      replicas: 1
     ports:
       - "3306:3306"
-    deploy:
-      replicas: 1
     networks:
       - mynetwork
+
   auth_service:
-    image: shobha722/pyapp:auth-image
-    ports:
-      - "5001:5001"
+    image: shaikmustafa/pyapp:auth_image
     deploy:
       replicas: 1
+    ports:
+      - "5001:5001"
     networks:
       - mynetwork
     depends_on:
       - db
+    
+
   book_service:
-    image: shobha722/pyapp:book-image
-    ports:
-      - "5002:5002"
+    image: shaikmustafa/pyapp:book_image
     deploy:
       replicas: 1
+    ports:
+      - "5002:5002"
     networks:
       - mynetwork
     depends_on:
       - db
   borrow_service:
-    image: shobha722/pyapp:borrow-image
-    ports:
-      - "5003:5003"
+    image: shaikmustafa/pyapp:borrow_image
     deploy:
       replicas: 1
+    ports:
+      - "5003:5003"
     networks:
       - mynetwork
     depends_on:
       - db
-  frontend_service:
-    image: shobha722/pyapp:frontend-image
-    ports:
-      - "5000:5000"
+
+  frontend:
+    image: shaikmustafa/pyapp:frontend
     deploy:
       replicas: 1
+    ports:
+      - "5000:5000"
     networks:
       - mynetwork
     depends_on:
-      - auth_service
-      - book_service
-      - borrow_service
+      - auth
+      - book
+      - borrow
+
 networks:
   mynetwork:
-    diver: overlay
+    driver: overlay
